@@ -1,10 +1,12 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using TrainRegistry.API.Swagger;
 using TrainRegistry.Application.Trains;
+using TrainRegistry.Application.Trains.Behaviors;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Infrastructure.Persistence;
 using TrainRegistry.Infrastructure.Repositories;
@@ -25,6 +27,9 @@ builder.Services.AddDbContext<TrainDbContext>(options =>
 
 // Repositories
 builder.Services.AddScoped<ITrainRepository, TrainRepository>();
+
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 
 // Swagger (optional but recommended)
 builder.Services.AddEndpointsApiExplorer();

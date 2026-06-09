@@ -13,7 +13,7 @@ namespace TrainRegistry.Application.Trains.Commands.CreateTrain
 
         public async Task<Guid> Handle(CreateTrainCommand command, CancellationToken cancellationToken)
         {
-            var train = new Train(command.length, command.speed, command.name);
+            var train = new Train(command.Length, command.Speed, command.Name);
             
             await _repository.AddAsync(train, cancellationToken);
 
