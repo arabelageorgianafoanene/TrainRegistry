@@ -1,10 +1,12 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using TrainRegistry.API.Swagger;
+using TrainRegistry.Application.Common.Exceptions;
 using TrainRegistry.Application.Trains;
 using TrainRegistry.Application.Trains.Behaviors;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
@@ -57,6 +59,47 @@ builder.Services.AddValidatorsFromAssemblyContaining<GetTrainByIdQuery>();
 
 var app = builder.Build();
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(async context =>
+    {
+        var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+
+        switch (exception)
+        {
+            case ValidationException validationException:
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                context.Response.ContentType = "application/json";
+
+                var errors = validationException.Errors
+                    .GroupBy(e => e.PropertyName)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(e => e.ErrorMessage).ToArray()
+                    );
+
+                await context.Response.WriteAsJsonAsync(new { errors });
+                break;
+
+            case NotFoundException notFound:
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsJsonAsync(new { error = notFound.Message });
+                break;
+
+            case UnauthorizedAccessException:
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.Response.WriteAsJsonAsync(new { error = "Unauthorized" });
+                break;
+
+            default:
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                await context.Response.WriteAsJsonAsync(new { error = "An unexpected error occurred." });
+                break;
+        }
+    });
+});
+
 
 // Exception middleware
 //app.UseMiddleware<ExceptionsHandlingMiddleware>();
