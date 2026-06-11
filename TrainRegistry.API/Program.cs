@@ -22,7 +22,7 @@ builder.Host.UseSerilog();
 builder.Services.AddControllers();
 
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(CreateTrainCommand).Assembly));
+    cfg.RegisterServicesFromAssembly(typeof(TrainRegistry.Application.AssemblyReference).Assembly));
 
 builder.Services.AddDbContext<TrainDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));

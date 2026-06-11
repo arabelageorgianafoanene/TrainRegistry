@@ -1,8 +1,9 @@
-﻿using TrainRegistry.Domain;
+﻿using MediatR;
+using TrainRegistry.Domain;
 
 namespace TrainRegistry.Application.Trains.Queries.GetAllTrains
 {
-    public class GetAllTrainsHandler
+    public class GetAllTrainsHandler : IRequestHandler<GetAllTrainsQuery, IReadOnlyList<Train>>
     {
         private readonly ITrainRepository _repository;
 

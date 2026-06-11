@@ -3,8 +3,7 @@ using TrainRegistry.Domain;
 
 namespace TrainRegistry.Application.Trains.Queries.GetTrainById
 {
-    public class GetTrainByIdHandler
-    : IRequestHandler<GetTrainByIdQuery, Train?>
+    public class GetTrainByIdHandler: IRequestHandler<GetTrainByIdQuery, Train?>
     {
         private readonly ITrainRepository _repository;
 

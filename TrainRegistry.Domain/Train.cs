@@ -11,20 +11,22 @@ namespace TrainRegistry.Domain
 
         public  double Speed {  get; private set; }
 
-        public Train(double Length, double Speed, string name)
+        public Train(double length, double speed, string name)
         {
             Id = Guid.NewGuid();
 
-            if (Speed < 0)
+            if (speed < 0)
             {
                 throw new DomainException("Train speed cannot be negative!");
             }
 
-            if (Length < 0)
+            if (length < 0)
             {
                 throw new DomainException("Train length cannot be negative!");
             }
 
+            Length = length;
+            Speed = speed;
             Name = name;
         }
     }
