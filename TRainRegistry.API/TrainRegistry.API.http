@@ -1,6 +1,6 @@
-@TRainRegistry.API_HostAddress = http://localhost:5010
+@TrainRegistry.API_HostAddress = http://localhost:5010
 
-GET {{TRainRegistry.API_HostAddress}}/weatherforecast/
+GET {{TrainRegistry.API_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
