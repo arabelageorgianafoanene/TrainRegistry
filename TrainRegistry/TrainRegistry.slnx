@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="../TRainRegistry.API/TrainRegistry.API.csproj" Id="9c037fef-8df6-4c44-b81d-4c8a64ca972e" />
+  <Project Path="../TrainRegistry.API/TrainRegistry.API.csproj" Id="9c037fef-8df6-4c44-b81d-4c8a64ca972e" />
   <Project Path="../TrainRegistry.Application/TrainRegistry.Application.csproj" Id="8586bf36-c237-4b52-a763-245b1ef481bd" />
   <Project Path="../TrainRegistry.Domain/TrainRegistry.Domain.csproj" Id="43bea763-eda0-430f-90ca-993900dfc837" />
   <Project Path="../TrainRegistry.Infrastructure/TrainRegistry.Infrastructure.csproj" Id="7cf73842-c094-4e73-97a4-c2a1d965130e" />

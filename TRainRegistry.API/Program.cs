@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using TrainRegistry.API.Swagger;
 using TrainRegistry.Application.Common.Exceptions;
 using TrainRegistry.Application.Trains;
@@ -13,8 +14,8 @@ using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Infrastructure.Persistence;
 using TrainRegistry.Infrastructure.Repositories;
 
-
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseSerilog();
 
 // Controllers
 builder.Services.AddControllers();
@@ -25,7 +26,7 @@ builder.Services.AddMediatR(cfg =>
 
 
 builder.Services.AddDbContext<TrainDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("TrainDb")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Repositories
 builder.Services.AddScoped<ITrainRepository, TrainRepository>();
@@ -39,6 +40,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 builder.Logging.AddConsole();
+
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Information()
+    .WriteTo.File(
+        path: "logs/train-registry-api-.log",
+        rollingInterval: RollingInterval.Day,
+        retainedFileCountLimit: 14,   
+        shared: true
+    )
+    .CreateLogger();
 
 builder.Services.AddApiVersioning(options =>
 {
@@ -55,6 +66,19 @@ builder.Services.AddVersionedApiExplorer(options =>
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<GetTrainByIdQuery>();
+
+
+var rawConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var safeConnectionString = System.Text.RegularExpressions.Regex.Replace(
+    rawConnectionString,
+    @"Password=[^;]*",
+    "Password=******",
+    System.Text.RegularExpressions.RegexOptions.IgnoreCase
+);
+
+Log.Information("Database connection string loaded: {ConnectionString}", safeConnectionString);
+
 
 
 var app = builder.Build();
@@ -100,6 +124,7 @@ app.UseExceptionHandler(errorApp =>
     });
 });
 
+builder.Configuration.AddEnvironmentVariables();
 
 // Exception middleware
 //app.UseMiddleware<ExceptionsHandlingMiddleware>();

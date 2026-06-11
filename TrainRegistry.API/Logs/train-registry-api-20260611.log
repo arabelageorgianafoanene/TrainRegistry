@@ -1,0 +1,83 @@
+2026-06-11 10:03:33.405 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:03:33.429 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:03:33.508 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:03:33.508 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:03:33.508 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TRainRegistry.API
+2026-06-11 10:03:34.120 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:03:34.305 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 193.3365ms
+2026-06-11 10:03:34.383 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:03:34.383 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:03:34.388 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 5.5539ms
+2026-06-11 10:03:34.420 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 37.2868ms
+2026-06-11 10:03:34.489 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:03:34.499 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 11.7444ms
+2026-06-11 10:06:41.045 +02:00 [INF] Database connection string loaded: 
+2026-06-11 10:06:41.424 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:06:41.426 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:06:41.508 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:06:41.508 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:06:41.508 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TRainRegistry.API
+2026-06-11 10:06:41.873 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:06:42.039 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 174.9049ms
+2026-06-11 10:06:42.119 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:06:42.119 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:06:42.123 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 3.948ms
+2026-06-11 10:06:42.155 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 35.4706ms
+2026-06-11 10:06:42.215 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:06:42.222 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 7.2063ms
+2026-06-11 10:10:35.176 +02:00 [INF] Database connection string loaded: 
+2026-06-11 10:10:35.578 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:10:35.579 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:10:35.664 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:10:35.664 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:10:35.664 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TRainRegistry.API
+2026-06-11 10:10:36.074 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:10:36.260 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 194.714ms
+2026-06-11 10:10:36.338 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:10:36.338 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:10:36.343 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 5.2617ms
+2026-06-11 10:10:36.378 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 40.554ms
+2026-06-11 10:10:36.436 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:10:36.444 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 7.6661ms
+2026-06-11 10:11:35.260 +02:00 [INF] Database connection string loaded: 
+2026-06-11 10:11:35.596 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:11:35.598 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:11:35.677 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:11:35.677 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:11:35.677 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TRainRegistry.API
+2026-06-11 10:11:36.521 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:11:36.789 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 279.6492ms
+2026-06-11 10:11:36.856 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:11:36.856 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:11:36.864 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 8.5281ms
+2026-06-11 10:11:36.995 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 139.6128ms
+2026-06-11 10:11:37.035 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:11:37.042 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 7.3725ms
+2026-06-11 10:14:33.498 +02:00 [INF] Database connection string loaded: 
+2026-06-11 10:14:33.814 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:14:33.816 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:14:33.897 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:14:33.898 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:14:33.898 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TrainRegistry.API
+2026-06-11 10:14:34.057 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:14:34.222 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 172.5969ms
+2026-06-11 10:14:34.291 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:14:34.291 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:14:34.298 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 7.378ms
+2026-06-11 10:14:34.328 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 37.1371ms
+2026-06-11 10:14:34.394 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:14:34.400 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 6.416ms
+2026-06-11 10:17:51.589 +02:00 [INF] Database connection string loaded: Host=localhost;Port=5432;Database=TrainRegistry;Username=postgres;Password=******;
+2026-06-11 10:17:51.826 +02:00 [INF] Now listening on: https://localhost:7065
+2026-06-11 10:17:51.827 +02:00 [INF] Now listening on: http://localhost:5010
+2026-06-11 10:17:51.898 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-11 10:17:51.899 +02:00 [INF] Hosting environment: Development
+2026-06-11 10:17:51.899 +02:00 [INF] Content root path: C:\Personal\TrainManagementService\TrainRegistry.API
+2026-06-11 10:17:52.161 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/index.html - null null
+2026-06-11 10:17:52.308 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/index.html - 200 null text/html;charset=utf-8 146.9717ms
+2026-06-11 10:17:52.348 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-11 10:17:52.354 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_framework/aspnetcore-browser-refresh.js - 200 14939 application/javascript; charset=utf-8 5.2672ms
+2026-06-11 10:17:52.360 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/_vs/browserLink - null null
+2026-06-11 10:17:52.477 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/_vs/browserLink - 200 null text/javascript; charset=UTF-8 117.3184ms
+2026-06-11 10:17:52.505 +02:00 [INF] Request starting HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - null null
+2026-06-11 10:17:52.510 +02:00 [INF] Request finished HTTP/2 GET https://localhost:7065/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 4.6874ms

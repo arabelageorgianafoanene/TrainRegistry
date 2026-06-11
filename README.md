@@ -83,3 +83,31 @@ MediatR	CQRS & request handling
 FluentValidation	Input validation
 Swagger / OpenAPI	API documentation
 Clean Architecture	Project structure
+
+## How to Run
+
+### Prerequisites
+- .NET 8 SDK
+- PostgreSQL
+
+### Configuration
+Set the following Windows environment variable:
+
+| Variable | Value |
+| `ConnectionStrings__DefaultConnection` | `Host=localhost;Port=5432;Database=TrainRegistry;Username=postgres;Password=your_password` |
+
+### Steps
+1. Clone the repository
+```bash
+   git clone https://github.com/arabelageorgianafoanene/TrainManagementService.git
+   cd TrainManagementService
+```
+2. Apply database migrations
+```bash
+   dotnet ef database update --project TrainRegistry.Infrastructure --startup-project TrainRegistry.API
+```
+3. Run the application
+```bash
+   dotnet run --project TrainRegistry.API
+```
+4. Open Swagger UI at `https://localhost:{port}/swagger`
