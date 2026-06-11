@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MediatR;
+using Microsoft.Extensions.Logging;
 using TrainRegistry.Domain;
 
 namespace TrainRegistry.Application.Trains.Commands.CreateTrain
 {
-    public class CreateTrainHandler
+    public class CreateTrainHandler : IRequestHandler<CreateTrainCommand, Guid>
     {
         private readonly ITrainRepository _repository;
         private readonly ILogger<CreateTrainHandler> _logger;

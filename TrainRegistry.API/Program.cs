@@ -10,6 +10,7 @@ using TrainRegistry.API.Swagger;
 using TrainRegistry.Application.Common.Exceptions;
 using TrainRegistry.Application.Trains;
 using TrainRegistry.Application.Trains.Behaviors;
+using TrainRegistry.Application.Trains.Commands.CreateTrain;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Infrastructure.Persistence;
 using TrainRegistry.Infrastructure.Repositories;
@@ -20,10 +21,8 @@ builder.Host.UseSerilog();
 // Controllers
 builder.Services.AddControllers();
 
-// MediatR (scan Application assembly)
 builder.Services.AddMediatR(cfg =>
-    cfg.RegisterServicesFromAssembly(typeof(GetTrainByIdQuery).Assembly));
-
+    cfg.RegisterServicesFromAssembly(typeof(CreateTrainCommand).Assembly));
 
 builder.Services.AddDbContext<TrainDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -149,8 +148,6 @@ app.UseSwaggerUI(options =>
             description.GroupName.ToUpperInvariant());
     }
 });
-
-
 
 app.MapControllers();
 app.Run();
