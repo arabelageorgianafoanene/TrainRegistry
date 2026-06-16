@@ -52,8 +52,8 @@ namespace TrainRegistry.Application.Auhentication.Commands.RegisterUser
                 return new RegisterResponse(Guid.Empty, request.UserName, false, $"Registration unsuccessful: Failed to create user with name {request.UserName}!", RegisterUserErrorCode.DatabaseError);
             }
 
-            _logger.LogInformation($"User name {request.UserName} registered successfully with id {user.UserId}!");
-            return new RegisterResponse(user.UserId, request.UserName, true, $"User name {request.UserName} registered successfully with id {user.UserId}!", RegisterUserErrorCode.None);
+            _logger.LogInformation($"User name {request.UserName} registered successfully with id {user.Id}!");
+            return new RegisterResponse(user.Id, request.UserName, true, $"User name {request.UserName} registered successfully with id {user.Id}!", RegisterUserErrorCode.None);
         }
     }
 }

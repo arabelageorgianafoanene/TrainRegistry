@@ -6,8 +6,8 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
 using TrainRegistry.API.Swagger;
@@ -35,7 +35,6 @@ if (jwtSettings != null)
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = true,
@@ -55,7 +54,6 @@ builder.Services.AddAuthorization();
 
 builder.Host.UseSerilog();
 
-// Controllers
 builder.Services.AddControllers();
 
 builder.Services.AddMediatR(cfg =>
@@ -64,7 +62,6 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddDbContext<TrainDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Repositories
 builder.Services.AddScoped<ITrainRepository, TrainRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
@@ -73,10 +70,7 @@ builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-
-// Swagger (optional but recommended)
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
 builder.Logging.AddConsole();
@@ -98,11 +92,19 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
 });
 
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
+
 builder.Services.AddVersionedApiExplorer(options =>
 {
     options.GroupNameFormat = "'v'VVV";
     options.SubstituteApiVersionInUrl = true;
 });
+
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<GetTrainByIdQuery>();
@@ -119,7 +121,33 @@ var safeConnectionString = System.Text.RegularExpressions.Regex.Replace(
 
 Log.Information("Database connection string loaded: {ConnectionString}", safeConnectionString);
 
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        In = ParameterLocation.Header,
+        Description = "Enter JWT token",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
 
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 app.UseHttpsRedirection();
@@ -166,11 +194,6 @@ app.UseExceptionHandler(errorApp =>
 
 builder.Configuration.AddEnvironmentVariables();
 
-// Exception middleware
-//app.UseMiddleware<ExceptionsHandlingMiddleware>();
-
-
-// Swagger UI
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -19,11 +19,14 @@ namespace TrainRegistry.Infrastructure.Repositories
             await _trainDbContext.Users.AddAsync(user, ct);
             await _trainDbContext.SaveChangesAsync(ct);
 
-            return user.UserId;
+            return user.Id;
         }
 
-        public async Task<User?> GetPasswordHashAndSaltAsync(string name, CancellationToken ct) => await _trainDbContext.Users.FindAsync(name, ct);
-           
+        public async Task<User?> GetPasswordHashAndSaltAsync(string name, CancellationToken ct)
+        {
+            return await _trainDbContext.Users.SingleOrDefaultAsync(u => u.Name == name, ct);
+        }
+        
         public async Task<bool> UserExistsAsync(string username, CancellationToken ct) => await _trainDbContext.Users.AnyAsync(u => u.Name == username, ct);
     }
 }

@@ -4,8 +4,8 @@ using TrainRegistry.Application.Trains.Commands.CreateTrain;
 using TrainRegistry.Application.Trains.Queries.GetAllTrains;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Api.Mappers;
-using TrainRegistry.Domain;
 using TrainRegistry.API.DTOs.Requests;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TrainRegistry.src.TrainRegistry.Api.Controllers
 {
@@ -35,6 +35,7 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllTrains(CancellationToken cancellationToken)
         {
             var trains = await _mediator.Send(new GetAllTrainsQuery(), cancellationToken);

@@ -44,8 +44,17 @@ namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
                 if (isPasswordValid)
                 {
                     _logger.LogInformation("User name {Name} logged in successfully", request.UserName);
-                    var token = _jwtTokenGenerator.GenerateToken(user.UserId, request.UserName);
-                    return new LoginResponse(request.UserName, token, true, "Login successful", LoginErrorCode.None);
+                    
+                    try
+                    {
+                        var token = _jwtTokenGenerator.GenerateToken(user.Id, request.UserName);
+                        return new LoginResponse(request.UserName, token, true, "Login successful", LoginErrorCode.None);
+                    }
+                    catch(Exception exception)
+                    {
+                        _logger.LogError(exception, "Token generation failed");
+                        throw;
+                    }
                 }
 
                 _logger.LogWarning("Invalid password for user name {Name}", request.UserName);
