@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using TrainRegistry.Domain;
+using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Application.Trains.Queries.GetAllTrains
 {

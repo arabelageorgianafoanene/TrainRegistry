@@ -5,7 +5,7 @@ using TrainRegistry.Application.Trains.Queries.GetAllTrains;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Api.Mappers;
 using TrainRegistry.Domain;
-using TrainRegistry.Api.DTOs;
+using TrainRegistry.API.DTOs.Requests;
 
 namespace TrainRegistry.src.TrainRegistry.Api.Controllers
 {
@@ -14,7 +14,6 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class TrainRegistryController : ControllerBase
     {
-
         private readonly IMediator _mediator;
 
         public TrainRegistryController(IMediator mediator)
@@ -49,7 +48,7 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTrain([FromBody]TrainDto train, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateTrain([FromBody]CreateTrainRequest train, CancellationToken cancellationToken)
         {
             var createTrainCommand = new CreateTrainCommand(train.Name, train.Length, train.Speed);
 

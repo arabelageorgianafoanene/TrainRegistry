@@ -1,6 +1,6 @@
 ﻿using TrainRegistry.src.TrainService.DomainModel.Exceptions;
 
-namespace TrainRegistry.Domain
+namespace TrainRegistry.Domain.Entities
 {
     public class Train
     {

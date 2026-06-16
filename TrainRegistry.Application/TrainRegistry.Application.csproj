@@ -16,4 +16,8 @@
     <ProjectReference Include="..\TrainRegistry.Domain\TrainRegistry.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Auhentication\Responses\" />
+  </ItemGroup>
+
 </Project>

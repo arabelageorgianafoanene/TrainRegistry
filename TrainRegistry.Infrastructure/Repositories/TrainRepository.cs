@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TrainRegistry.Application.Trains;
 using TrainRegistry.Infrastructure.Persistence;
-using TrainRegistry.Domain;
+using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Infrastructure.Repositories
 {

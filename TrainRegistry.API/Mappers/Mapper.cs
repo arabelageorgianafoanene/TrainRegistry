@@ -1,13 +1,13 @@
-﻿using TrainRegistry.Api.DTOs;
-using TrainRegistry.Domain;
+﻿using TrainRegistry.API.DTOs.Requests;
+using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Api.Mappers
 {
     public static class Mapper
     {
-        public static TrainDto ToDTO(Train train)
+        public static CreateTrainRequest ToDTO(Train train)
         {
-            return new TrainDto(train.Id, train.Name, train.Length, train.Speed);
+            return new CreateTrainRequest(train.Id, train.Name, train.Length, train.Speed);
         }
     }
 }

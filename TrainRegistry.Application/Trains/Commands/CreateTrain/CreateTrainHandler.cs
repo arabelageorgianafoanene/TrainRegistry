@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.Extensions.Logging;
-using TrainRegistry.Domain;
+using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Application.Trains.Commands.CreateTrain
 {

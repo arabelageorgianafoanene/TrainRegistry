@@ -1,21 +1,58 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 using TrainRegistry.API.Swagger;
+using TrainRegistry.Application.Auhentication.Hashing;
+using TrainRegistry.Application.Common.Config;
 using TrainRegistry.Application.Common.Exceptions;
-using TrainRegistry.Application.Trains;
+using TrainRegistry.Application.Interfaces;
 using TrainRegistry.Application.Trains.Behaviors;
-using TrainRegistry.Application.Trains.Commands.CreateTrain;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
+using TrainRegistry.Infrastructure.Authentication;
+using TrainRegistry.Infrastructure.Authentication.Hashing;
 using TrainRegistry.Infrastructure.Persistence;
 using TrainRegistry.Infrastructure.Repositories;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.Configure<JwtSettings>(
+    builder.Configuration.GetSection("JwtSettings"));
+
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+
+if (jwtSettings != null)
+{
+    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = jwtSettings.Issuer,
+                ValidAudience = jwtSettings.Audience,
+                IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings.SecretKey))
+            };
+        });
+}
+builder.Services.AddAuthentication();
+builder.Services.AddAuthorization();
+
 builder.Host.UseSerilog();
 
 // Controllers
@@ -29,6 +66,10 @@ builder.Services.AddDbContext<TrainDbContext>(options =>
 
 // Repositories
 builder.Services.AddScoped<ITrainRepository, TrainRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
+builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
