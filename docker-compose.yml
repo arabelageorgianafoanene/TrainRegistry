@@ -1,0 +1,10 @@
+services:
+  trainregistry.api:
+    image: ${DOCKER_REGISTRY-}trainregistryapi
+    build:
+      context: .
+      dockerfile: ./TrainRegistry.API/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development

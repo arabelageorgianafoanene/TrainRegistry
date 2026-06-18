@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="docker-compose.yml" />
+  </Folder>
   <Project Path="TrainRegistry.API/TrainRegistry.API.csproj" />
   <Project Path="TrainRegistry.Application.Tests/TrainRegistry.Application.Tests.csproj" Id="40e4d215-294f-47dd-aa3e-4149eb448ad6" />
   <Project Path="TrainRegistry.Application/TrainRegistry.Application.csproj" />
