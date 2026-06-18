@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="TrainRegistry.API/TrainRegistry.API.csproj" />
+  <Project Path="TrainRegistry.Application.Tests/TrainRegistry.Application.Tests.csproj" Id="40e4d215-294f-47dd-aa3e-4149eb448ad6" />
+  <Project Path="TrainRegistry.Application/TrainRegistry.Application.csproj" />
+  <Project Path="TrainRegistry.Domain/TrainRegistry.Domain.csproj" />
+  <Project Path="TrainRegistry.Infrastructure/TrainRegistry.Infrastructure.csproj" />
+</Solution>
