@@ -234,3 +234,4 @@ This almost always means the connection is reaching a *different* PostgreSQL ins
   If this shows a `postgres` process, stop it or use the container's remapped port (`5433`) instead.
 - The database volume was initialized before `POSTGRES_PASSWORD` was set/changed — Postgres only applies that variable on first init of an empty volume. Fix with `docker compose down -v && docker compose up -d` (⚠️ destroys existing data).
 - The `ConnectionStrings__DefaultConnection` environment variable was edited but the terminal/IDE was already open — Windows env var changes only apply to *new* processes. Close and reopen your terminal/IDE.
+- 
