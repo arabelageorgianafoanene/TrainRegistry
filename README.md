@@ -90,6 +90,76 @@ This design improves scalability, since authorization checks don't require a dat
 | Swagger / OpenAPI       | API documentation                        |
 | Clean Architecture      | Project structure                          |
 
+🚀 CI/CD Pipeline (GitHub Actions + Azure Container Registry)
+This project includes an automated CI/CD pipeline built using GitHub Actions and integrated with Azure Container Registry (ACR).
+Every push to the master branch triggers a workflow that builds, tags, and publishes a Docker image for the API.
+
+🔧 Pipeline Workflow
+The GitHub Actions workflow performs the following steps:
+
+Checks out the repository
+
+Authenticates securely with Azure using a Service Principal
+
+Builds a Docker image from the /api project
+
+Tags the image with:
+
+the commit SHA (immutable version)
+
+latest (rolling version)
+
+Pushes both tags to Azure Container Registry
+
+Makes the image available for deployment to AKS, Azure Web App for Containers, or any container‑based environment
+
+🔐 Secure Secret Management
+All Azure credentials are stored as GitHub Actions Secrets, including:
+
+AZURE_CLIENT_ID
+
+AZURE_TENANT_ID
+
+AZURE_CLIENT_SECRET
+
+AZURE_SUBSCRIPTION_ID
+
+AZURE_REGISTRY_NAME
+
+AZURE_REGISTRY_LOGIN_SERVER
+
+This ensures that no sensitive information is committed to the repository.
+
+📦 Container Publishing
+The pipeline publishes images to:
+
+Azure Container Registry (ACR)
+
+This enables:
+
+Automated deployments
+
+Versioned container images
+
+Easy rollback using SHA‑tagged images
+
+Consistent builds across environments
+
+🏗️ Why This Matters
+This CI/CD setup provides:
+
+Automated, repeatable builds
+
+Cloud‑ready container images
+
+Secure authentication
+
+Production‑grade versioning
+
+A modern DevOps workflow
+
+It significantly improves deployment reliability and makes the service ready for scalable cloud environments.
+
 ## 🚀 How to Run (Docker — recommended)
 
 The project ships with a `docker-compose.yml` that runs both PostgreSQL and the API as containers.
