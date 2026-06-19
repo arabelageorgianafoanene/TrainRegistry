@@ -16,7 +16,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-       - name: Azure Login
+      - name: Azure Login
         uses: azure/login@v2
         with:
           auth-type: service_principal
