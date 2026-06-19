@@ -1,6 +1,6 @@
-# TrainManagementService
+# TrainRegistry
 
-TrainManagementService is a modular .NET 8 microservice responsible for managing train registration and metadata within a distributed Train Management System.
+TrainRegistry is a modular .NET 8 microservice responsible for managing train registration and metadata within a distributed Train Management System.
 It exposes a clean REST API, follows Clean Architecture, and integrates modern .NET patterns such as CQRS with MediatR, FluentValidation, and Entity Framework Core with PostgreSQL.
 
 ## 🚆 Features
@@ -86,8 +86,8 @@ On Windows, go to **System Properties → Environment Variables → New** and en
 
 1. Clone the repository
    ```bash
-   git clone https://github.com/arabelageorgianafoanene/TrainManagementService.git
-   cd TrainManagementService
+   git clone https://github.com/arabelageorgianafoanene/TrainRegistry.git
+   cd TrainRegistry
    ```
 
 2. Apply database migrations
