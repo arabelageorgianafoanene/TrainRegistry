@@ -91,6 +91,7 @@ This design improves scalability, since authorization checks don't require a dat
 | Clean Architecture      | Project structure                          |
 
 🚀 CI/CD Pipeline (GitHub Actions + Azure Container Registry)
+
 This project includes an automated CI/CD pipeline built using GitHub Actions and integrated with Azure Container Registry (ACR).
 Every push to the master branch triggers a workflow that builds, tags, and publishes a Docker image for the API.
 
