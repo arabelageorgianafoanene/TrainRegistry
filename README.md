@@ -1,4 +1,4 @@
-# TrainRegistry
+# TrainRegistry 
 
 TrainRegistry is a modular .NET 8 microservice responsible for managing train registration and metadata within a distributed Train Management System.
 It exposes a clean REST API, follows Clean Architecture, and integrates modern .NET patterns such as CQRS with MediatR, FluentValidation, and Entity Framework Core with PostgreSQL.
