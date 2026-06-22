@@ -1,5 +1,4 @@
 name: Build and Push to ACR
-# force refresh
 
 permissions:
   id-token: write
@@ -32,13 +31,13 @@ jobs:
 
       - name: Build and push image
         run: |
-          IMAGE=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/api:${{ github.sha }}
-          docker build -t $IMAGE ./api
+          IMAGE=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/trainregistry-api:${{ github.sha }}
+          docker build -t $IMAGE .
           docker push $IMAGE
 
       - name: Tag latest
         run: |
-          IMAGE=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/api:${{ github.sha }}
-          LATEST=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/api:latest
+          IMAGE=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/trainregistry-api:${{ github.sha }}
+          LATEST=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/trainregistry-api:latest
           docker tag $IMAGE $LATEST
           docker push $LATEST
