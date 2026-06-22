@@ -32,7 +32,7 @@ jobs:
       - name: Build and push image
         run: |
           IMAGE=${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/trainregistry-api:${{ github.sha }}
-          docker build -t $IMAGE .
+          docker build -t $IMAGE -f TrainRegistry.API/Dockerfile .
           docker push $IMAGE
 
       - name: Tag latest
