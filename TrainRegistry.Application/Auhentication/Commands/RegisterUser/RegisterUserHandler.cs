@@ -53,7 +53,7 @@ namespace TrainRegistry.Application.Auhentication.Commands.RegisterUser
             }
 
             _logger.LogInformation($"User name {request.UserName} registered successfully with id {user.Id}!");
-            return new RegisterResponse(user.Id, request.UserName, true, $"User name {request.UserName} registered successfully with id {user.Id}!", RegisterUserErrorCode.None);
+            return new RegisterResponse(guid, request.UserName, true, $"User name {request.UserName} registered successfully with id {user.Id}!", RegisterUserErrorCode.None);
         }
     }
 }

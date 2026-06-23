@@ -22,7 +22,7 @@ namespace TrainRegistry.Application.Tests.Validators
 
             Assert.False(result.IsValid);
 
-            Assert.Contains(result.Errors, e=>e.PropertyName == "Id");
+            Assert.Contains(result.Errors, e => e.PropertyName == "Id");
         }
     }
 }
