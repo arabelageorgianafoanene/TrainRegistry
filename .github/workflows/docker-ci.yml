@@ -1,9 +1,5 @@
 name: Build and Push to ACR  
 
-permissions:
-  id-token: write
-  contents: read
-
 on:
   push:
     branches: ["master"]
@@ -12,6 +8,9 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
