@@ -6,7 +6,7 @@ using TrainRegistry.Application.Interfaces;
 
 namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
 {
-    public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginResponse>
+    public class LoginUserHandler : IRequestHandler<LoginUserQuery, LoginUserResponse>
     {
         private readonly IUserRepository _repository;
         private readonly ILogger<LoginUserHandler> _logger;
@@ -21,7 +21,7 @@ namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        public async Task<LoginResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
+        public async Task<LoginUserResponse> Handle(LoginUserQuery request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Login attempt for user name {Name}", request.UserName);
 
@@ -30,7 +30,7 @@ namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
             if (!userExists)
             {
                 _logger.LogWarning("User name {Name} does not exist", request.UserName);
-                return new LoginResponse(request.UserName, string.Empty, false, $"Login unsuccessful: User name {request.UserName} does not exist", LoginErrorCode.UserNotFound);
+                return new LoginUserResponse(request.UserName, string.Empty, false, $"Login unsuccessful: User name {request.UserName} does not exist", LoginErrorCode.UserNotFound);
             }
 
             var user = await _repository.GetPasswordHashAndSaltAsync(request.UserName, cancellationToken);
@@ -48,7 +48,7 @@ namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
                     try
                     {
                         var token = _jwtTokenGenerator.GenerateToken(user.Id, request.UserName);
-                        return new LoginResponse(request.UserName, token, true, "Login successful", LoginErrorCode.None);
+                        return new LoginUserResponse(request.UserName, token, true, "Login successful", LoginErrorCode.None);
                     }
                     catch(Exception exception)
                     {
@@ -58,11 +58,11 @@ namespace TrainRegistry.Application.Auhentication.Queries.LoginUser
                 }
 
                 _logger.LogWarning("Invalid password for user name {Name}", request.UserName);
-                return new LoginResponse(request.UserName, string.Empty, false, $"Login unsuccessful: Invalid password for user name {request.UserName}", LoginErrorCode.InvalidPassword);
+                return new LoginUserResponse(request.UserName, string.Empty, false, $"Login unsuccessful: Invalid password for user name {request.UserName}", LoginErrorCode.InvalidPassword);
             }
 
             _logger.LogWarning("User name {Name} not found", request.UserName);
-            return new LoginResponse(request.UserName, string.Empty, false, $"Login unsuccessful: User name {request.UserName} not found!", LoginErrorCode.UserNotFound);
+            return new LoginUserResponse(request.UserName, string.Empty, false, $"Login unsuccessful: User name {request.UserName} not found!", LoginErrorCode.UserNotFound);
         }
     }
 }
