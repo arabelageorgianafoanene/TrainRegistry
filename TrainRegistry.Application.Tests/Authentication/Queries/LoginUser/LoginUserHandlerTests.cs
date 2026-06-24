@@ -28,8 +28,6 @@ namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser
         [Fact]
         public async Task Should_Return_The_Token_When_User_Exists_And_The_Password_Matches()
         {
-            //Arrange
-
             var mockedToken = "mocked-jwt-token";
 
             User? user = new User
@@ -43,11 +41,7 @@ namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser
             _userRepositoryMock.Setup(x => x.GetPasswordHashAndSaltAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(user); 
             _jwtTokenGeneratorMock.Setup(x => x.GenerateToken(It.IsAny<Guid>(), It.IsAny<string>())).Returns(mockedToken);
 
-            //Act
-
             var loginUserResponse = await _handler.Handle(new LoginUserQuery("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.True(loginUserResponse.Success);
             Assert.Equal(mockedToken, loginUserResponse.Token);
@@ -63,15 +57,9 @@ namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser
         [Fact]
         public async Task Should_Not_Return_The_Token_When_User_Doesnot_Exists()
         {
-            //Arrange
-
-           _userRepositoryMock.Setup(x => x.UserExistsAsync(It.IsAny<string>(), CancellationToken.None)).ReturnsAsync(false);
+            _userRepositoryMock.Setup(x => x.UserExistsAsync(It.IsAny<string>(), CancellationToken.None)).ReturnsAsync(false);
             
-            //Act
-
             var loginUserResponse = await _handler.Handle(new LoginUserQuery("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.False(loginUserResponse.Success);
             Assert.Contains("Login unsuccessful", loginUserResponse.Message);
@@ -86,8 +74,6 @@ namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser
         [Fact]
         public async Task Should_Not_Return_The_Token_When_The_Password_Doesnot_Match()
         {
-            //Arrange
-
             var user= new User
             {
                 Id = Guid.NewGuid(),
@@ -98,11 +84,7 @@ namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser
             _userRepositoryMock.Setup(x => x.GetPasswordHashAndSaltAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(user);
             _passwordHasherMock.Setup(x => x.VerifyPasswordHash("password123", It.IsAny<byte[]>(), It.IsAny<byte[]>())).Returns(false);
 
-            //Act
-
             var loginUserResponse = await _handler.Handle(new LoginUserQuery("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.False(loginUserResponse.Success);
             Assert.Contains("Login unsuccessful", loginUserResponse.Message);

@@ -4,7 +4,6 @@
     {
         None = 0,
         UserNotFound = 1,
-        InvalidPassword = 2,
-        AccountLocked = 3
+        InvalidPassword = 2
     }
 }

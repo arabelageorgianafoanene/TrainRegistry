@@ -25,18 +25,13 @@ namespace TrainRegistry.Application.Tests.Authentication.Commands.RegisterUser
         [Fact]
         public async Task Handle_Should_Return_RegisterUserResponse_When_User_Is_Registered_Successfully()
         {
-            //Arrange
-
             _userRepositoryMock.Setup(repo => repo.UserExistsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
             _passwordHasherMock.Setup(hasher => hasher.CreatePasswordHash(It.IsAny<string>())).Returns(new PasswordHashResult() { PasswordHash = new byte[] { 1, 2, 3 }, PasswordSalt = new byte[] { 4, 5, 6 } });
 
             var guid = Guid.NewGuid();
             _userRepositoryMock.Setup(repo => repo.CreateUserAsync(It.IsAny<Domain.Entities.User>(), It.IsAny<CancellationToken>())).ReturnsAsync(guid);
 
-            //Act
             var registerUserResponse = await _registerUserHandler.Handle(new RegisterUserCommand("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.Contains("registered successfully", registerUserResponse.Message);
             Assert.Equal(guid, registerUserResponse.Guid);
@@ -50,15 +45,9 @@ namespace TrainRegistry.Application.Tests.Authentication.Commands.RegisterUser
         [Fact]
         public async Task Handle_Should_Not_Return_Successfully_When_User_Already_Exists() 
         {
-            // Arrange
-
             _userRepositoryMock.Setup(repo => repo.UserExistsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
                       
-            //Act
-
             var registerUserResponse = await _registerUserHandler.Handle(new RegisterUserCommand("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.False(registerUserResponse.Success);
             Assert.Contains("already exists", registerUserResponse.Message);
@@ -73,21 +62,17 @@ namespace TrainRegistry.Application.Tests.Authentication.Commands.RegisterUser
         [Fact]
         public async Task Handle_Should_Not_Return_Successfully_When_User_Creation_Fails()
         {
-            //Arrange
-
             _userRepositoryMock.Setup(repo => repo.UserExistsAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
             _passwordHasherMock.Setup(hasher => hasher.CreatePasswordHash(It.IsAny<string>())).Returns(new PasswordHashResult() { PasswordHash = new byte[] { 1, 2, 3 }, PasswordSalt = new byte[] { 4, 5, 6 } });
 
             _userRepositoryMock.Setup(repo => repo.CreateUserAsync(It.IsAny<Domain.Entities.User>(), It.IsAny<CancellationToken>())).ReturnsAsync(Guid.Empty);
 
-            //Act
             var registerUserResponse = await _registerUserHandler.Handle(new RegisterUserCommand("testuser", "password123"), CancellationToken.None);
-
-            //Assert
 
             Assert.False(registerUserResponse.Success);
 
             Assert.Contains("Registration unsuccessful", registerUserResponse.Message);
+
             Assert.Equal(Guid.Empty, registerUserResponse.Guid);
             Assert.Equal(RegisterUserErrorCode.DatabaseError, registerUserResponse.RegisterUserErrorCode);
 
