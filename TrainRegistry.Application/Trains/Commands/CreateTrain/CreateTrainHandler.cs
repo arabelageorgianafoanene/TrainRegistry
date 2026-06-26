@@ -20,7 +20,7 @@ namespace TrainRegistry.Application.Trains.Commands.CreateTrain
         {
             _logger.LogInformation($"Creating train with length: {command.Length}, speed: {command.Speed} and name: {command.Name}!");
 
-            var train = new Train(command.Length, command.Speed, command.Name);
+            var train = Train.Create(command.Name, command.Length, command.Speed);
             
             await _repository.AddAsync(train, cancellationToken);
 
