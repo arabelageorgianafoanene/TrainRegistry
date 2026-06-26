@@ -20,7 +20,7 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetTrainById
         public async Task Should_Return_Train_When_Train_Exists()
         {
             var trainId = Guid.NewGuid();
-            var expectedTrain = new Train(10, 100, "test train");
+            var expectedTrain = Train.Create("test train", 10, 100);
                         
             _repositoryMock.Setup(repo => repo.GetByIdAsync(trainId, CancellationToken.None)).ReturnsAsync(expectedTrain);
 

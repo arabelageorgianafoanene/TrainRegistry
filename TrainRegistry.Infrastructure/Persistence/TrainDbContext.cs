@@ -22,10 +22,27 @@ namespace TrainRegistry.Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Train>(entity =>
+            modelBuilder.Entity<Train>(builder =>
             {
-                entity.HasKey(t => t.Id);
-                entity.Property(t => t.Name).IsRequired();
+                builder.HasKey(t => t.Id);
+                builder.Property(t => t.Name).IsRequired();
+
+                builder.OwnsOne(t => t.Length, length =>
+                {
+                    length.Property(l => l.Value).HasColumnName("Length").IsRequired();
+                });
+
+                builder.OwnsOne(t => t.Speed, speed =>
+                {
+                    speed.Property(s => s.Value).HasColumnName("Speed").IsRequired();
+                });
+
+                builder.OwnsOne(t => t.TrainStatus, status =>
+                {
+                    status.Property(s => s.Value).HasColumnName("TrainStatus").IsRequired();
+                });
+
+
             });
         }
 

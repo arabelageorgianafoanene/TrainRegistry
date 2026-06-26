@@ -2,16 +2,18 @@
 {
     public sealed class TrainLength
     {
-        public double Length { get; }
+        public double Value { get; private set; }
 
-        public TrainLength(double length)
+        private TrainLength() { }
+
+        public TrainLength(double value)
         {
-            if (length < 0)
+            if (value < 0)
             {
                 throw new ArgumentException("Train length cannot be negative.");
             }
 
-            Length = length;
+            Value = value;
         }
     }
 }

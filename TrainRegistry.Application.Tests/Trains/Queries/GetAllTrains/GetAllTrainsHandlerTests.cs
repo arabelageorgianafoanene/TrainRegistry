@@ -22,8 +22,8 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetAllTrains
         {
             _repositoryMock.Setup(repo => repo.GetAllAsync(CancellationToken.None)).ReturnsAsync(new List<Train>
             {
-                new Train(10, 100, "test train 1"),
-                new Train(20, 200, "test train 2")
+                Train.Create("test train 1", 10, 100),
+                Train.Create("test train 2", 20, 200)
             });
 
             var list = await _handler.Handle(new GetAllTrainsQuery(), CancellationToken.None);

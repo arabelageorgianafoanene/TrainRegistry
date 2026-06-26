@@ -2,7 +2,9 @@
 {
     public sealed class TrainSpeed
     {
-        public double Speed { get; }
+        public double Value { get; private set; }
+
+        private TrainSpeed() { }
 
         public TrainSpeed(double speed)
         {
@@ -10,8 +12,8 @@
             {
                 throw new ArgumentException("Train speed cannot be negative.");
             }
-            Speed = speed;
+            
+            Value = speed;
         }
-
     }
 }
