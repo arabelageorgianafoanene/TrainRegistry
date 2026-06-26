@@ -1,33 +1,50 @@
-﻿using TrainRegistry.src.TrainService.DomainModel.Exceptions;
+﻿using TrainRegistry.Domain.Abstractions;
+using TrainRegistry.Domain.Events;
+using TrainRegistry.Domain.Exceptions;
+using TrainRegistry.Domain.ValueObjects;
 
 namespace TrainRegistry.Domain.Entities
 {
-    public class Train
+    public class Train: Entity
     {
-        public  Guid Id { get; private set; }
         public  string Name { get; private set; }
 
-        public double Length {  get; private set; }
+        public TrainLength Length {  get; private set; }
 
-        public  double Speed {  get; private set; }
+        public  TrainSpeed Speed {  get; private set; }
 
-        public Train(double length, double speed, string name)
+        public TrainStatus TrainStatus { get; private set; }
+
+        private Train() { }
+
+        public static Train Create(string name, double length, double speed)
         {
-            Id = Guid.NewGuid();
-
-            if (speed < 0)
+            var train = new Train
             {
-                throw new DomainException("Train speed cannot be negative!");
+                Id = Guid.NewGuid(),
+                Name = name,
+                Length = new TrainLength(length),
+                Speed = new TrainSpeed(speed),
+                TrainStatus = TrainStatus.Active
+            };
+
+            train.RaiseDomainEvent(new TrainCreatedEvent(train.Id, train.Name));
+
+            return train;
+        }
+
+        public void ChangedStatus(TrainStatus newStatus)
+        {
+            if(!TrainStatus.CanTransitionTo(newStatus))
+            {
+                throw new InvalidTrainStatusChangeException(TrainStatus.Value, newStatus.Value);
             }
 
-            if (length < 0)
-            {
-                throw new DomainException("Train length cannot be negative!");
-            }
+            var oldStatus = TrainStatus;
 
-            Length = length;
-            Speed = speed;
-            Name = name;
+            TrainStatus = newStatus;
+
+            RaiseDomainEvent(new TrainStatusChangedEvent(Id, oldStatus, newStatus));
         }
     }
 }
