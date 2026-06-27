@@ -52,8 +52,6 @@ if (jwtSettings != null)
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-builder.Host.UseSerilog();
-
 builder.Services.AddControllers();
 
 builder.Services.AddMediatR(cfg =>
@@ -73,17 +71,11 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 
-builder.Logging.AddConsole();
-
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()
-    .WriteTo.File(
-        path: "logs/train-registry-api-.log",
-        rollingInterval: RollingInterval.Day,
-        retainedFileCountLimit: 14,   
-        shared: true
-    )
+    .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddApiVersioning(options =>
 {
