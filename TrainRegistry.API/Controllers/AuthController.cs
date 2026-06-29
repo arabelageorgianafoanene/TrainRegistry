@@ -8,9 +8,9 @@ using TrainRegistry.Application.Common.Enums;
 
 namespace TrainRegistry.API.Controllers
 {
-    [ApiController]
+    [ApiVersion("1.0")]
     [Route("api/[controller]")]
-    public class AuthController : ControllerBase
+    public class AuthController : ApiController
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AuthController> _logger;

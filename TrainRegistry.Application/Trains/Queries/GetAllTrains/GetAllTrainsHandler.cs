@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using TrainRegistry.Application.Interfaces;
-using TrainRegistry.Domain.Entities;
+using TrainRegistry.Application.Trains.DTOs;
 
 namespace TrainRegistry.Application.Trains.Queries.GetAllTrains
 {
-    public class GetAllTrainsHandler : IRequestHandler<GetAllTrainsQuery, IReadOnlyList<Train>>
+    public class GetAllTrainsHandler : IRequestHandler<GetAllTrainsQuery, ErrorOr<IReadOnlyList<TrainResponse>>>
     {
         private readonly ITrainRepository _repository;
 
@@ -13,9 +14,16 @@ namespace TrainRegistry.Application.Trains.Queries.GetAllTrains
             _repository = repository;
         }
 
-        public async Task<IReadOnlyList<Train>> Handle(GetAllTrainsQuery request, CancellationToken ct)
+        public async Task<ErrorOr<IReadOnlyList<TrainResponse>>> Handle(GetAllTrainsQuery request, CancellationToken ct)
         {
-            return await _repository.GetAllAsync(ct);
+            var trains = await _repository.GetAllAsync(ct);
+
+            if(trains.Any())
+            {
+                return trains.Select(train => train.ToTrainResponse()).ToList();
+            }
+
+            return new List<TrainResponse>();    
         }
     }
 }

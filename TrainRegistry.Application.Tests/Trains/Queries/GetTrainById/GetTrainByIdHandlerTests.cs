@@ -2,6 +2,8 @@
 using TrainRegistry.Application.Interfaces;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Domain.Entities;
+using FluentAssertions;
+using ErrorOr;
 
 namespace TrainRegistry.Application.Tests.Trains.Queries.GetTrainById
 {
@@ -27,12 +29,11 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetTrainById
             var handler = new GetTrainByIdHandler(_repositoryMock.Object);
             
             var result = await handler.Handle(new GetTrainByIdQuery(trainId), CancellationToken.None);
-            
-            Assert.NotNull(result);
-            Assert.Equal(expectedTrain.Id, result.Id);
-            Assert.Equal(expectedTrain.Name, result.Name);
-            Assert.Equal(expectedTrain.Length, result.Length);
-            Assert.Equal(expectedTrain.Speed, result.Speed);
+
+            Assert.Equal(expectedTrain.Id, result.Value.Id);
+            Assert.Equal(expectedTrain.Name, result.Value.Name);
+            Assert.Equal(expectedTrain.Length.Value, result.Value.Length);
+            Assert.Equal(expectedTrain.Speed.Value, result.Value.Speed);
         }
 
         [Fact]
@@ -44,7 +45,11 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetTrainById
 
             var result = await _handler.Handle(new GetTrainByIdQuery(It.IsAny<Guid>()), CancellationToken.None);
 
-            Assert.Null(result);           
+            result.IsError.Should().BeTrue();
+            Assert.Equal(ErrorType.NotFound, result.FirstError.Type);
+            Assert.Equal("Train.NotFound", result.FirstError.Code);
+            Assert.Equal("No train was found!", result.FirstError.Description);
+
         }
     }
 }

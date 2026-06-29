@@ -1,6 +1,7 @@
 ﻿
 using Moq;
 using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Trains.DTOs;
 using TrainRegistry.Application.Trains.Queries.GetAllTrains;
 using TrainRegistry.Domain.Entities;
 
@@ -26,10 +27,10 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetAllTrains
                 Train.Create("test train 2", 20, 200)
             });
 
-            var list = await _handler.Handle(new GetAllTrainsQuery(), CancellationToken.None);
+            var response = await _handler.Handle(new GetAllTrainsQuery(), CancellationToken.None);
 
-           Assert.NotNull(list);
-           Assert.Equal(2, list.Count);
+           Assert.NotNull(response.Value);
+           Assert.Equal(2, response.Value.Count);
         }
 
         [Fact]
@@ -39,10 +40,11 @@ namespace TrainRegistry.Application.Tests.Trains.Queries.GetAllTrains
 
             _repositoryMock.Setup(repo => repo.GetAllAsync(CancellationToken.None)).ReturnsAsync(trains = new List<Train>());
 
-            var list = await _handler.Handle(new GetAllTrainsQuery(), CancellationToken.None);
+            var reponse = await _handler.Handle(new GetAllTrainsQuery(), CancellationToken.None);
 
-            Assert.NotNull(list);
-            Assert.Empty(list);
+            Assert.NotNull(reponse.Value);
+            Assert.IsType<List<TrainResponse>>(reponse.Value);
+            Assert.Empty(reponse.Value);
         }
     }
 }

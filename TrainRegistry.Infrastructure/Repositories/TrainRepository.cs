@@ -2,6 +2,7 @@
 using TrainRegistry.Infrastructure.Persistence;
 using TrainRegistry.Application.Interfaces;
 using TrainRegistry.Domain.Entities;
+using TrainRegistry.Domain.ValueObjects;
 
 namespace TrainRegistry.Infrastructure.Repositories
 {
@@ -24,6 +25,15 @@ namespace TrainRegistry.Infrastructure.Repositories
             await _context.SaveChangesAsync(cancellationToken);
             
             return train.Id;
+        }
+
+        public async Task<bool> UpdateAsync(Train train, CancellationToken cancellationToken)
+        {
+            
+            _context.Trains.Update(train);
+            await _context.SaveChangesAsync(cancellationToken);
+            
+            return true;
         }
     }
 }

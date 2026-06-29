@@ -13,7 +13,7 @@ namespace TrainRegistry.Domain.Entities
 
         public  TrainSpeed Speed {  get; private set; }
 
-        public TrainStatus TrainStatus { get; private set; }
+        public TrainStatus TrainStatus { get; private set; } = TrainStatus.Inactive;
 
         private Train() { }
 
@@ -25,7 +25,7 @@ namespace TrainRegistry.Domain.Entities
                 Name = name,
                 Length = new TrainLength(length),
                 Speed = new TrainSpeed(speed),
-                TrainStatus = TrainStatus.Active
+                TrainStatus = TrainStatus.Inactive
             };
 
             train.RaiseDomainEvent(new TrainCreatedEvent(train.Id, train.Name));

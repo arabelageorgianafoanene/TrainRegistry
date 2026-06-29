@@ -15,7 +15,9 @@ namespace TrainRegistry.Infrastructure.Migrations
                 table: "Trains",
                 type: "text",
                 nullable: false,
-                defaultValue: "");
+                defaultValue: "Inactive");
+
+            migrationBuilder.Sql("UPDATE Trains SET Status = 'Inactive' WHERE Status IS NULL OR Status = ''");
         }
 
         /// <inheritdoc />

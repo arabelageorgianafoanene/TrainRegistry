@@ -1,4 +1,5 @@
 ﻿using TrainRegistry.Domain.Entities;
+using TrainRegistry.Domain.ValueObjects;
 
 namespace TrainRegistry.Application.Interfaces
 {
@@ -8,5 +9,7 @@ namespace TrainRegistry.Application.Interfaces
         Task<Train?> GetByIdAsync(Guid id, CancellationToken ct);
 
         Task<Guid> AddAsync(Train train, CancellationToken cancellationToken);
+
+        Task<bool> UpdateAsync(Train train, CancellationToken cancellationToken);
     }
 }

@@ -1,18 +1,26 @@
-﻿using MediatR;
+﻿using ErrorOr;
+using MediatR;
 using TrainRegistry.Application.Interfaces;
-using TrainRegistry.Domain.Entities;
+using TrainRegistry.Application.Trains.DTOs;
 
 namespace TrainRegistry.Application.Trains.Queries.GetTrainById
 {
-    public class GetTrainByIdHandler: IRequestHandler<GetTrainByIdQuery, Train?>
+    public class GetTrainByIdHandler: IRequestHandler<GetTrainByIdQuery, ErrorOr<TrainResponse>>
     {
         private readonly ITrainRepository _repository;
 
         public GetTrainByIdHandler(ITrainRepository repository) => _repository = repository;
 
-        public async Task<Train?> Handle(GetTrainByIdQuery request, CancellationToken ct)
+        public async Task<ErrorOr<TrainResponse>> Handle(GetTrainByIdQuery request, CancellationToken ct)
         {
-            return await _repository.GetByIdAsync(request.Id, ct);
+            var train = await _repository.GetByIdAsync(request.Id, ct);
+
+            if(train is null)
+            {
+                return Error.NotFound("Train.NotFound", "No train was found!");
+            }
+
+            return train.ToTrainResponse();
         }
     }
 }

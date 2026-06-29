@@ -1,18 +1,19 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using TrainRegistry.Api.Mappers;
+using TrainRegistry.API.Controllers;
+using TrainRegistry.API.DTOs.Requests;
 using TrainRegistry.Application.Trains.Commands.CreateTrain;
+using TrainRegistry.Application.Trains.Commands.UpdateTrainStatus;
 using TrainRegistry.Application.Trains.Queries.GetAllTrains;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
-using TrainRegistry.Api.Mappers;
-using TrainRegistry.API.DTOs.Requests;
-using Microsoft.AspNetCore.Authorization;
 
 namespace TrainRegistry.src.TrainRegistry.Api.Controllers
 {
-    [ApiController]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    public class TrainRegistryController : ControllerBase
+    public class TrainRegistryController : ApiController
     {
         private readonly IMediator _mediator;
 
@@ -22,16 +23,16 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
         }
 
         [HttpGet("{guid:guid}")]
+        [Authorize]
         public async Task<IActionResult> GetTrainById(Guid guid, CancellationToken cancellationToken)
         {
-            var train = await _mediator.Send(new GetTrainByIdQuery(guid), cancellationToken);
+            var trainResponse = await _mediator.Send(new GetTrainByIdQuery(guid), cancellationToken);
 
-            if (train == null)
-            {
-                return NotFound($"Train with id {guid} was not found.");
-            }
-
-            return Ok(Mapper.ToDTO(train));
+            return trainResponse.Match
+                (
+                    Ok,
+                    errors => Problem(errors)                 
+                );
         }
 
         [HttpGet]
@@ -40,12 +41,10 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
         {
             var trains = await _mediator.Send(new GetAllTrainsQuery(), cancellationToken);
 
-            if (!trains.Any())
-            {
-                return NotFound("No train was found!");
-            }
-
-            return Ok(trains.Select(Mapper.ToDTO));
+            return trains.Match(
+              Ok,
+                errors => Problem(errors)
+            );
         }
 
         [HttpPost]
@@ -55,6 +54,22 @@ namespace TrainRegistry.src.TrainRegistry.Api.Controllers
 
             var guid = await _mediator.Send(createTrainCommand, cancellationToken);
             return CreatedAtAction(nameof(GetTrainById), new { guid}, null);
+        }
+
+        [HttpPut("{id}/status")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> UpdateTrainStatus([FromBody] UpdateTrainStatusRequest updateTrainStatusRequest, CancellationToken cancellationToken)
+        {
+            var updateTrainCommand = new UpdateTrainStatusCommand(updateTrainStatusRequest.TrainId, updateTrainStatusRequest.TrainStatus);
+
+            var result = await _mediator.Send(updateTrainCommand, cancellationToken);
+
+            return result.Match(
+                updated => NoContent(),
+                error => Problem(error));
         }
     }
 }

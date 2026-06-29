@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using System.Text;
+using TrainRegistry.API.SchemaFilters;
 using TrainRegistry.API.Swagger;
 using TrainRegistry.Application.Auhentication.Hashing;
 using TrainRegistry.Application.Common.Config;
@@ -52,7 +53,11 @@ if (jwtSettings != null)
 builder.Services.AddAuthentication();
 builder.Services.AddAuthorization();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new TrainRegistry.API.Converters.TrainStatusJsonConverter());
+    });
 
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(TrainRegistry.Application.AssemblyReference).Assembly));
@@ -138,7 +143,9 @@ builder.Services.AddSwaggerGen(options =>
             },
             Array.Empty<string>()
         }
-    });
+    }
+    );
+    options.SchemaFilter<TrainStatusSchemaFilter>();
 });
 
 var app = builder.Build();

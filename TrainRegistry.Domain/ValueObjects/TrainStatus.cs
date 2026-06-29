@@ -16,7 +16,7 @@ namespace TrainRegistry.Domain.ValueObjects
             Value = value;
         }
 
-        public static readonly IReadOnlyCollection<TrainStatus> _all = new []
+        public static readonly IReadOnlyCollection<TrainStatus> All = new []
         {
             Active,
             Inactive,
@@ -26,7 +26,7 @@ namespace TrainRegistry.Domain.ValueObjects
 
         public static TrainStatus From(string value)
         {
-            var status = _all.FirstOrDefault(s => s.Value.Equals(value, StringComparison.OrdinalIgnoreCase));
+            var status = All.FirstOrDefault(s => s.Value.Equals(value, StringComparison.OrdinalIgnoreCase));
 
             return status is null ? throw new InvalidTrainException(value) : status;
         }
