@@ -10,6 +10,8 @@ namespace TrainRegistry.Domain.ValueObjects
         public static readonly TrainStatus UnderMaintenance = new("UnderMaintenance");
         public static readonly TrainStatus Decommissioned = new("Decommissioned");
 
+        
+
         public string Value { get; }
         private TrainStatus(string value)
         {
@@ -33,6 +35,17 @@ namespace TrainRegistry.Domain.ValueObjects
 
         public bool CanTransitionTo(TrainStatus newStatus)
         {
+            if(this == Inactive)
+            {
+                Console.WriteLine("Train is Inactive. It can only transition to Active or Decommissioned.");
+            }
+
+            if(newStatus == Active)
+            {
+                Console.WriteLine("Train is transitioning to Active. It can only transition from Inactive or UnderMaintenance.");
+            }              
+
+
             if(this == newStatus) return true;
 
             return (this, newStatus) switch
@@ -48,5 +61,26 @@ namespace TrainRegistry.Domain.ValueObjects
         }
 
         public override string ToString() => Value;
+
+        public override bool Equals(object? obj)
+        {
+            if(obj is TrainStatus other)
+            {
+                return Value.Equals(other.Value, StringComparison.OrdinalIgnoreCase);
+            }
+
+            return false;
+        }
+
+        public static bool operator ==(TrainStatus? left, TrainStatus? right)
+        {
+            if (left is null && right is null) return true;
+            if (left is null || right is null) return false;
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(TrainStatus? left, TrainStatus? right) => !(left == right);
+
+        public override int GetHashCode() => Value.GetHashCode();
     }
 }

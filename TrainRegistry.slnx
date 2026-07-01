@@ -1,6 +1,9 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path=".env" />
+    <File Path="add-migration.ps1" />
     <File Path="docker-compose.yml" />
+    <File Path="migrate.ps1" />
   </Folder>
   <Project Path="TrainRegistry.API/TrainRegistry.API.csproj" />
   <Project Path="TrainRegistry.Application.Tests/TrainRegistry.Application.Tests.csproj" Id="40e4d215-294f-47dd-aa3e-4149eb448ad6" />
