@@ -21,6 +21,7 @@ using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Infrastructure.Authentication;
 using TrainRegistry.Infrastructure.Authentication.Hashing;
 using TrainRegistry.Infrastructure.Persistence;
+using TrainRegistry.Infrastructure.Persistence.Interceptors;
 using TrainRegistry.Infrastructure.Repositories;
 
 
@@ -75,6 +76,12 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
+
+builder.Services.AddScoped<DomainEventsInterceptors>();
+
+builder.Services.AddDbContext<TrainDbContext>((sp, options) =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+           .AddInterceptors(sp.GetRequiredService<DomainEventsInterceptors>()));
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)

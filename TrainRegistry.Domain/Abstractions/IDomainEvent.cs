@@ -2,7 +2,7 @@
 
 namespace TrainRegistry.Domain.Abstractions
 {
-    public interface IDomainEvent: INotification
+    public interface IDomainEvent
     {
         public Guid Id { get; }
         public DateTime OccuredOn { get; }
