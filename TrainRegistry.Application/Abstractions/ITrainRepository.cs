@@ -1,6 +1,6 @@
 ﻿using TrainRegistry.Domain.Entities;
 
-namespace TrainRegistry.Application.Interfaces
+namespace TrainRegistry.Application.Abstractions
 {
     public interface ITrainRepository
     {

@@ -1,6 +1,6 @@
 ﻿using ErrorOr;
 using MediatR;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Application.Trains.DTOs;
 
 namespace TrainRegistry.Application.Trains.Queries.GetTrainById

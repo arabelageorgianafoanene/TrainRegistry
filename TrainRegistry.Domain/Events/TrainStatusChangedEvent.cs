@@ -7,7 +7,7 @@ namespace TrainRegistry.Domain.Events
     {
         public Guid Id { get; }
 
-        public DateTime OccuredOn { get; }
+        public DateTime UpdatedTime { get; }
 
         public Guid TrainId { get; }
 
@@ -18,7 +18,7 @@ namespace TrainRegistry.Domain.Events
         public TrainStatusChangedEvent(Guid trainId, TrainStatus oldStatus, TrainStatus newStatus)
         {
             Id = Guid.NewGuid();
-            OccuredOn = DateTime.UtcNow;
+            UpdatedTime = DateTime.UtcNow;
             TrainId = trainId;
             OldStatus = oldStatus;
             NewStatus = newStatus;

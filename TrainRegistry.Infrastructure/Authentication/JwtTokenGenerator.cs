@@ -4,7 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TrainRegistry.Application.Common.Config;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using JwtRegisteredClaimNames = System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames;
 
 namespace TrainRegistry.Infrastructure.Authentication

@@ -3,7 +3,7 @@ using Moq;
 using TrainRegistry.Application.Auhentication.Hashing;
 using TrainRegistry.Application.Auhentication.Queries.LoginUser;
 using TrainRegistry.Application.Common.Enums;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Application.Tests.Authentication.Queries.LoginUser

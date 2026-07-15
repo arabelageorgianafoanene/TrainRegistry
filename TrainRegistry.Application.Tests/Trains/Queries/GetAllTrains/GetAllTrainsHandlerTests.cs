@@ -1,6 +1,6 @@
 ﻿
 using Moq;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Application.Trains.DTOs;
 using TrainRegistry.Application.Trains.Queries.GetAllTrains;
 using TrainRegistry.Domain.Entities;

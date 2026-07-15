@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using TrainRegistry.Application.Auhentication.Hashing;
 using TrainRegistry.Application.Common.Enums;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Domain.Entities;
 
 namespace TrainRegistry.Application.Auhentication.Commands.RegisterUser

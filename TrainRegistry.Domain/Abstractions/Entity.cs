@@ -6,7 +6,7 @@ namespace TrainRegistry.Domain.Abstractions
     {
         public Guid Id { get; protected set; }
 
-        public readonly List<IDomainEvent> _domainEvents = new();
+        private readonly List<IDomainEvent> _domainEvents = new();
 
         public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 

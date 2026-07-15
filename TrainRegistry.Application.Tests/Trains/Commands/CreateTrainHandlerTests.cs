@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using Moq;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Application.Trains.Commands.CreateTrain;
 
 namespace TrainRegistry.Application.Tests.Trains.Commands
@@ -10,12 +10,15 @@ namespace TrainRegistry.Application.Tests.Trains.Commands
         private readonly CreateTrainHandler _createTrainHandler;
         private readonly Mock<ITrainRepository> _trainRepositoryMock;
         private readonly Mock<ILogger<CreateTrainHandler>> _loggerMock;
+        private readonly Mock<IUnitOfWork> _unityOfWorkMock;
 
         public CreateTrainHandlerTests()
         {
             _trainRepositoryMock = new Mock<ITrainRepository>();
             _loggerMock = new Mock<ILogger<CreateTrainHandler>>();
-            _createTrainHandler = new CreateTrainHandler(_trainRepositoryMock.Object, _loggerMock.Object);
+            _unityOfWorkMock = new Mock<IUnitOfWork>();
+
+            _createTrainHandler = new CreateTrainHandler(_trainRepositoryMock.Object, _loggerMock.Object, _unityOfWorkMock.Object);
         }
 
         [Fact]

@@ -1,5 +1,5 @@
 ﻿using Moq;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Domain.Entities;
 using FluentAssertions;

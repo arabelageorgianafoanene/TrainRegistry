@@ -2,22 +2,25 @@
 
 namespace TrainRegistry.Domain.Events
 {
-    public class TrainCreatedEvent : IDomainEvent
+    public class TrainRegisteredEvent : IDomainEvent
     {
         public Guid Id {  get; }
 
-        public DateTime OccuredOn { get; }
+        public DateTime UpdatedTime { get; }
 
         public Guid TrainId { get; }
 
         public string TrainName { get; }
 
-        public TrainCreatedEvent(Guid trainId, string trainName)
+        public string Status { get; }
+
+        public TrainRegisteredEvent(Guid trainId, string trainName, string status)
         {
             Id = Guid.NewGuid();
-            OccuredOn = DateTime.UtcNow;
+            UpdatedTime = DateTime.UtcNow;
             TrainId = trainId;
             TrainName = trainName;
+            Status = status;
         }
     }
 }

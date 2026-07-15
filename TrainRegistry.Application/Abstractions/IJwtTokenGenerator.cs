@@ -1,4 +1,4 @@
-﻿namespace TrainRegistry.Application.Interfaces
+﻿namespace TrainRegistry.Application.Abstractions
 {
     public interface IJwtTokenGenerator
     {

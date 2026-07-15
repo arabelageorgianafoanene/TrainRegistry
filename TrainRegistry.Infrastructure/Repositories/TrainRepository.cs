@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TrainRegistry.Infrastructure.Persistence;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Domain.Entities;
 using TrainRegistry.Domain.ValueObjects;
 

@@ -3,7 +3,7 @@ using Moq;
 using TrainRegistry.Application.Auhentication.Commands.RegisterUser;
 using TrainRegistry.Application.Auhentication.Hashing;
 using TrainRegistry.Application.Common.Enums;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 
 namespace TrainRegistry.Application.Tests.Authentication.Commands.RegisterUser
 {

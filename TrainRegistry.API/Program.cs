@@ -12,16 +12,16 @@ using Serilog;
 using System.Text;
 using TrainRegistry.API.SchemaFilters;
 using TrainRegistry.API.Swagger;
+using TrainRegistry.Application.Abstractions;
 using TrainRegistry.Application.Auhentication.Hashing;
 using TrainRegistry.Application.Common.Config;
 using TrainRegistry.Application.Common.Exceptions;
-using TrainRegistry.Application.Interfaces;
 using TrainRegistry.Application.Trains.Behaviors;
 using TrainRegistry.Application.Trains.Queries.GetTrainById;
 using TrainRegistry.Infrastructure.Authentication;
 using TrainRegistry.Infrastructure.Authentication.Hashing;
+using TrainRegistry.Infrastructure.Messaging;
 using TrainRegistry.Infrastructure.Persistence;
-using TrainRegistry.Infrastructure.Persistence.Interceptors;
 using TrainRegistry.Infrastructure.Repositories;
 
 
@@ -72,16 +72,17 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
 builder.Services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+var rabbitMqConnection = await RabbitMqConnection.CreateAsync(builder.Configuration);
+builder.Services.AddSingleton(rabbitMqConnection);
+
+builder.Services.AddSingleton<IEventPublisher, RabbitMqEventPublisher>();
+
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
-
-builder.Services.AddScoped<DomainEventsInterceptors>();
-
-builder.Services.AddDbContext<TrainDbContext>((sp, options) =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-           .AddInterceptors(sp.GetRequiredService<DomainEventsInterceptors>()));
 
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -197,6 +198,11 @@ app.UseExceptionHandler(errorApp =>
                 break;
         }
     });
+});
+
+app.Lifetime.ApplicationStopping.Register(() =>
+{
+    rabbitMqConnection.DisposeAsync().AsTask().GetAwaiter().GetResult();
 });
 
 builder.Configuration.AddEnvironmentVariables();

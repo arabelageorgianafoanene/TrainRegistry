@@ -28,7 +28,7 @@ namespace TrainRegistry.Domain.Entities
                 TrainStatus = TrainStatus.Inactive
             };
 
-            train.RaiseDomainEvent(new TrainCreatedEvent(train.Id, train.Name));
+            train.RaiseDomainEvent(new TrainRegisteredEvent(train.Id, train.Name, train.TrainStatus.Value));
 
             return train;
         }

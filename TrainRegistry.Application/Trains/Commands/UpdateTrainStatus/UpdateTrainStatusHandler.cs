@@ -1,15 +1,17 @@
 ﻿using ErrorOr;
 using MediatR;
-using TrainRegistry.Application.Interfaces;
+using TrainRegistry.Application.Abstractions;
 
 namespace TrainRegistry.Application.Trains.Commands.UpdateTrainStatus
 {
     public class UpdateTrainStatusHandler : IRequestHandler<UpdateTrainStatusCommand, ErrorOr<Updated>>
     {
         private readonly ITrainRepository _trainRepository;
-        public UpdateTrainStatusHandler(ITrainRepository trainRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public UpdateTrainStatusHandler(ITrainRepository trainRepository, IUnitOfWork unitOfWork)
         {
             _trainRepository = trainRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task<ErrorOr<Updated>> Handle(UpdateTrainStatusCommand updateTrainStatusRequest, CancellationToken cancellationToken)
         {
@@ -24,6 +26,7 @@ namespace TrainRegistry.Application.Trains.Commands.UpdateTrainStatus
             {
                 train.ChangedStatus(updateTrainStatusRequest.TrainStatus);
                 await _trainRepository.UpdateAsync(train, cancellationToken);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return Result.Updated;
             }
 
