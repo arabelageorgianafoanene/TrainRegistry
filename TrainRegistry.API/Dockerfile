@@ -2,6 +2,9 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
+ARG GITHUB_PAT
+ENV NUGET_AUTH_TOKEN=$GITHUB_PAT
+
 # Copy all .csproj files first (optimizes Docker layer caching)
 COPY ["TrainRegistry.API/TrainRegistry.API.csproj", "TrainRegistry.API/"]
 COPY ["TrainRegistry.Application/TrainRegistry.Application.csproj", "TrainRegistry.Application/"]
@@ -10,6 +13,8 @@ COPY ["TrainRegistry.Domain/TrainRegistry.Domain.csproj", "TrainRegistry.Domain/
 COPY ["TrainRegistry.Infrastructure/TrainRegistry.Infrastructure.csproj", "TrainRegistry.Infrastructure/"]
 
 # Restore dependencies
+
+COPY nuget.config .
 RUN dotnet restore "TrainRegistry.API/TrainRegistry.API.csproj"
 
 # Copy everything else and build
