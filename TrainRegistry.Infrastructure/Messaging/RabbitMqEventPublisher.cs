@@ -2,12 +2,13 @@
 using System.Text;
 using System.Text.Json;
 using TrainRegistry.Application.Abstractions;
+using TrainEventContracts;
 
 namespace TrainRegistry.Infrastructure.Messaging
 {
     public class RabbitMqEventPublisher : IEventPublisher
     {
-        private const string ExchangeName = "train_events_exchange";
+        ;
         private readonly RabbitMqConnection _rabbitMqConnection;
 
 
@@ -25,7 +26,7 @@ namespace TrainRegistry.Infrastructure.Messaging
             await using var channel = await _rabbitMqConnection.Connection.CreateChannelAsync(cancellationToken: ct);
 
             await channel.ExchangeDeclareAsync(
-                exchange: ExchangeName,
+                exchange: TrainEventRoutingKeys.ExchangeName,
                 type: ExchangeType.Topic,
                 durable: true,
                 cancellationToken: ct);
@@ -39,7 +40,7 @@ namespace TrainRegistry.Infrastructure.Messaging
             };
 
             await channel.BasicPublishAsync(
-                exchange: ExchangeName,
+                exchange: TrainEventRoutingKeys.ExchangeName,
                 routingKey: routingKey,
                 mandatory: false,
                 basicProperties: properties,
