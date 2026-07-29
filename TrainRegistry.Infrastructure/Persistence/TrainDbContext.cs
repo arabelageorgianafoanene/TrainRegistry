@@ -1,14 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TrainRegistry.Domain.Entities;
+using TrainRegistry.Infrastructure.Outbox;
 
 namespace TrainRegistry.Infrastructure.Persistence
 {
     public class TrainDbContext : DbContext
     {
-        public TrainDbContext(DbContextOptions dbContextOptions): base(dbContextOptions){ }
+        private readonly OutboxSaveChangesInterceptor _outboxInterceptor;
+
+        public TrainDbContext(DbContextOptions dbContextOptions, OutboxSaveChangesInterceptor outboxSaveChangesInterceptor) : base(dbContextOptions)
+        {
+            _outboxInterceptor = outboxSaveChangesInterceptor;
+        }
         public DbSet<Train> Trains => Set<Train>();
 
         public DbSet<User> Users => Set<User>();
+
+        public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -34,6 +43,11 @@ namespace TrainRegistry.Infrastructure.Persistence
                     status.Property(s => s.Value).HasColumnName("TrainStatus").IsRequired();
                 });
             });
+        }
+              
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.AddInterceptors(_outboxInterceptor);
         }
     }
 }

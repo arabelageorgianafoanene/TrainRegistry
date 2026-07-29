@@ -11,17 +11,20 @@ namespace TrainRegistry.Domain.Events
 
         public Guid TrainId { get; }
 
+        public string TrainName { get; }
+
         public TrainStatus OldStatus { get; }
 
         public TrainStatus NewStatus { get; }
 
-        public TrainStatusChangedEvent(Guid trainId, TrainStatus oldStatus, TrainStatus newStatus)
+        public TrainStatusChangedEvent(Guid trainId, TrainStatus oldStatus, TrainStatus newStatus, string name)
         {
             Id = Guid.NewGuid();
             UpdatedTime = DateTime.UtcNow;
             TrainId = trainId;
             OldStatus = oldStatus;
             NewStatus = newStatus;
+            TrainName = name;
         }
     }
 }

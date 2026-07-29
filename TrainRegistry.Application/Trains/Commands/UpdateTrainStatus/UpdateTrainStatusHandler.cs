@@ -7,11 +7,10 @@ namespace TrainRegistry.Application.Trains.Commands.UpdateTrainStatus
     public class UpdateTrainStatusHandler : IRequestHandler<UpdateTrainStatusCommand, ErrorOr<Updated>>
     {
         private readonly ITrainRepository _trainRepository;
-        private readonly IUnitOfWork _unitOfWork;
-        public UpdateTrainStatusHandler(ITrainRepository trainRepository, IUnitOfWork unitOfWork)
+        
+        public UpdateTrainStatusHandler(ITrainRepository trainRepository)
         {
-            _trainRepository = trainRepository;
-            _unitOfWork = unitOfWork;
+            _trainRepository = trainRepository;            
         }
         public async Task<ErrorOr<Updated>> Handle(UpdateTrainStatusCommand updateTrainStatusRequest, CancellationToken cancellationToken)
         {
@@ -26,7 +25,6 @@ namespace TrainRegistry.Application.Trains.Commands.UpdateTrainStatus
             {
                 train.ChangedStatus(updateTrainStatusRequest.TrainStatus);
                 await _trainRepository.UpdateAsync(train, cancellationToken);
-                await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return Result.Updated;
             }
 

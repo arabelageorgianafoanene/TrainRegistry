@@ -43,8 +43,8 @@ namespace TrainRegistry.Domain.Entities
             var oldStatus = TrainStatus;
 
             TrainStatus = newStatus;
-
-            RaiseDomainEvent(new TrainStatusChangedEvent(Id, oldStatus, newStatus));
+            
+            RaiseDomainEvent(new TrainStatusChangedEvent(Id, oldStatus, newStatus, Name));
         }
     }
 }

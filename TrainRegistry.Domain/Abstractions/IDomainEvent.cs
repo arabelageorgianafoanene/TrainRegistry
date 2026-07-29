@@ -1,6 +1,4 @@
-﻿using MediatR;
-
-namespace TrainRegistry.Domain.Abstractions
+﻿namespace TrainRegistry.Domain.Abstractions
 {
     public interface IDomainEvent
     {
